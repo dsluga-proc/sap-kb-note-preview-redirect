@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Redirect SAP Note Preview
 // @namespace   https://github.com/dsluga-proc/sap-kb-note-preview-redirect
-// @downloadURL https://github.com/dsluga-proc/sap-kb-note-preview-redirect/raw/master/sap_kb_preview_rewrite.user.js
+// @downloadURL https://github.com/dsluga-proc/sap-kb-note-preview-redirect/raw/main/sap_kb_preview_rewrite.user.js
 // @description Redirect SAP Knowledgebase note preview to actual note page
 // @version     0.1
 // @include		https://apps.support.sap.com/sap/support/knowledge/*
