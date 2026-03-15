@@ -1,16 +1,33 @@
 // ==UserScript==
-// @name        Redirect SAP Note Preview
-// @namespace   https://github.com/dsluga-proc/sap-kb-note-preview-redirect
-// @downloadURL https://github.com/dsluga-proc/sap-kb-note-preview-redirect/raw/main/sap_kb_preview_rewrite.user.js
-// @description Redirect SAP Knowledgebase note preview to actual note page
-// @version     0.2
-// @match		http*://apps.support.sap.com/sap/support/knowledge/*
-// @match		http*://userapps.support.sap.com/sap/support/knowledge/*
-// @match		http*://service.sap.com/sap/support/notes/*
+// @name         Redirect SAP Note Preview
+// @namespace    https://github.com/dsluga-proc/sap-kb-note-preview-redirect
+// @version      1.0
+// @description  Redirect SAP KB preview URLs to the new me.sap.com note viewer
+// @author       David Sluga
+// @match        https://userapps.support.sap.com/sap/support/knowledge/*
+// @updateURL    https://github.com/dsluga-proc/sap-kb-note-preview-redirect/raw/main/sap_kb_preview_rewrite.user.js
+// @downloadURL  https://github.com/dsluga-proc/sap-kb-note-preview-redirect/raw/main/sap_kb_preview_rewrite.user.js
+// @grant        none
 // ==/UserScript==
 
-const currUrl = window.location.href;
-const regex = /[^/]{0,11}$/g;
-const noteNr = currUrl.match(regex)[0];
+(function () {
+    'use strict';
 
-window.location.replace("https://launchpad.support.sap.com/#/notes/" + noteNr);
+    const path = window.location.pathname;
+
+    // Match SAP note number with optional language segment
+    const match = path.match(/\/knowledge\/(?:[a-z]{2}\/)?(\d+)/i);
+
+    if (!match) return;
+
+    const noteNumber = match[1];
+
+    // SAP expects 10-digit padded number
+    const paddedNote = noteNumber.padStart(10, '0');
+
+    const targetUrl = `https://me.sap.com/notes/${paddedNote}/E`;
+
+    if (window.location.href !== targetUrl) {
+        window.location.replace(targetUrl);
+    }
+})();
